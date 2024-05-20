@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+#define SIZE 88
+
+int main() {// definimos las variables y 
+    int array[SIZE];
+    int i, numero_inicial, numero_a_buscar;
+    int found = 0; // es una variable que nos va a indicar si el numero fue encontrado
+
+   
+    printf("Ingrese el número inicial para llenar el arreglo: ");
+    scanf("%d", &numero_inicial);
+
+    // utilizamos for para llenar el arreglo a partir del numero inicial ingresado
+    for (i = 0; i < SIZE; i++) {
+        array[i] = numero_inicial + i;
+    }
+
+    // se imprime el arreglo
+    printf("El arreglo llenado es:\n");
+    for (i = 0; i < SIZE; i++) {
+        printf("%d ", array[i]);
+    }
+    printf("\n");
+
+    
+    printf("Ingrese un número para buscar la posicion en el arreglo: ");
+    scanf("%d", &numero_a_buscar);
+
+    // se utiliza for para hacer el bucle y if para encontrar el numero y realizar una accion si lo encuentra
+    for (i = 0; i < SIZE; i++) {
+        if (array[i] == numero_a_buscar) {
+            printf("Valor encontrado en la posición %d\n", i);
+            found = 1; // Indica que el número fue encontrado
+            break; 
+        }
+    }
+
+    // Si el número no fue encontrado
+    if (!found) {
+        printf("No encontrado\n");
+    }
+
+    return 0;
+}
