@@ -1,0 +1,44 @@
+#include <stdio.h>
+
+#define FILA 9
+#define COLUMNA 9
+
+int main() {
+    int matriz[FILA][COLUMNA];
+    int numero_inicio, numero_a_buscar;
+    int i, j;
+
+
+    printf("Ingrese el número inicial para llenar la matriz: ");
+    scanf("%d", &numero_inicio);
+
+    // Llenar la matriz con números secuenciales a partir de start_number
+    for (i = 0; i < FILA; i++) {
+        for (j = 0; j < COLUMNA; j++) {
+            matriz[i][j] = numero_inicio++;
+        }
+    }
+
+    // Imprimir la matriz
+    printf("La matriz es:\n");
+    for (i = 0; i < FILA; i++) {
+        for (j = 0; j < COLUMNA; j++) {
+            printf("%d ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+
+
+    printf("Ingrese un número para buscar en la matriz: ");
+    scanf("%d", &numero_a_buscar);
+
+    // Aqui es para buscar el numero en la matriz y determinar su posicion
+    for (i = 0; i < FILA; i++) {
+        for (j = 0; j < COLUMNA; j++) {
+            if (matriz[i][j] == numero_a_buscar) {
+                printf("Posición del número %d: [%d][%d]\n", numero_a_buscar, i, j);
+            }
+        }
+    }
+    return 0;
+}
