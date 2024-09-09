@@ -164,3 +164,32 @@ INSERT INTO InformacionVendedor (InfoVendedor, Horarios, DiasAtencion, RedesSoci
     (108, '08:00-17:00', 'Lunes-Viernes','@Bog_315Bajaj'),
     (109, '07:00-16:00', 'Lunes-Domingo','@MotosHero_Bog'),
     (110, '08:00-18:00', 'Lunes-Sabado','@MovilityBogota');
+
+
+--FUNCION--
+--En la siguiente funcion se observa que sera utilizada para consultar el promedio de calificacion de cada publicacion, la idea de esta
+funcion es determinar el promedio de calidad que cada comercio esta dando hacia los clientes--
+
+Delimiter $
+CREATE FUNCTION INVENTARIO1 ( Publicacion INT)
+RETURNS FLOAT
+DETERMINISTIC 
+	BEGIN 
+		DECLARE Pub int;
+        
+        Select AVG(Calificacion) INTO Pub 
+        FROM Opiniones 
+        WHERE IdPublicacion = Publicacion;
+        
+        RETURN Pub;
+        
+        END;
+        
+        
+END $   
+
+--CONSULTA--
+
+Select IdPublicacion, NombreUsuario, INVENTARIO1(21000) AS RESULTADO FROM Opiniones;
+
+--Nos mostrara una tabla donde aparte de la informacion que solicitamos nos arroge el promedio de cada publicacion.--
