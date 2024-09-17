@@ -1,0 +1,26 @@
+
+ --Se crea una función que me haga un calculo para saber el total vendido de un producto en especifico--
+
+DELIMITER $
+CREATE FUNCTION TotalVentas(IdProduct INT)
+RETURNS INT 
+DETERMINISTIC 
+BEGIN
+	DECLARE Ventas INT;
+		SELECT sum(Cantidad * Valor_Unidad) INTO Ventas FROM Factura 
+        WHERE Producto = IdProduct;
+        RETURN Ventas;
+	END$
+DELIMITER ;
+
+--Se establece el procedimiento para hacer el calculo del valor total de un solo producto.--
+
+DELIMITER $
+CREATE PROCEDURE Ventas_Factura( IddProducto INT)
+	BEGIN
+		DECLARE Factura INT;
+        SET Factura = (SELECT TotalVentas(IddProducto) FROM Factura
+        WHERE Producto = IddProducto);
+        SELECT Factura AS Total_a_pagar ;
+	END;
+$
