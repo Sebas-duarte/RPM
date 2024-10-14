@@ -1,0 +1,41 @@
+DELIMITER %
+
+CREATE PROCEDURE ActTotalOpiniones()
+BEGIN
+    DECLARE Final INT DEFAULT 0;
+    DECLARE usuario_id INT;
+    DECLARE total_opiniones INT;
+
+    -- Se crea el cursor 
+    DECLARE perfil_cursor CURSOR FOR 
+        SELECT Usuario FROM Perfil;
+
+    -- para cerrar el cursor en caso de una excepcion
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET Final = 1;
+
+    OPEN perfil_cursor;
+
+    -- Hacemos el bucle llamado 
+    Conteo_Opi: LOOP
+        FETCH perfil_cursor INTO usuario_id;
+
+        IF Final THEN
+            LEAVE Conteo_Opi;
+        END IF;
+
+        -- Contar opiniones para el usuario actual
+        SELECT COUNT(*) INTO total_opiniones 
+        FROM Opiniones 
+        WHERE IdPublicacion IN (SELECT IdPublicaciones FROM Publicaciones WHERE Comercio = usuario_id);
+
+        -- Se actualiza la informacion en la tabla Perfil
+        UPDATE Perfil SET Cant_Opiniones = total_opiniones WHERE Usuario = usuario_id;
+    END LOOP;
+    CLOSE perfil_cursor;
+END %
+
+DELIMITER ;
+
+call ActTotalOpiniones();
+Select * from Perfil
+
